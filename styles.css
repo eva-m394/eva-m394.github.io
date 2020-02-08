@@ -1,0 +1,47 @@
+
+body{
+	background-color: #B0C4DE;
+	font-family: "Garamond";
+}
+h1{
+	color: #22272a;
+	text-align: center;
+	font-size: 40px;
+}
+h2{
+	color: #22272a;
+	margin: 20px 0 10px 50px;
+	font-variant: small-caps;
+	font-size: 30px;
+}
+p,ul,ol{
+	font-style: justify;
+	font-size: 17px;
+	margin: 0 0 10px 40px;
+}
+footer{
+	margin-top: 25px
+}
+a:link{
+	font-style: italic;
+	color: #2a4f6f;
+}
+a:visited{
+	font-style: italic;
+	color: #6a4f6f;
+}
+.column{
+	float: left;
+	width: 50%;
+	padding:0;
+}
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+@media screen and (max-width: 600px) {
+  .column {
+    width: 100%;
+  }
+}
