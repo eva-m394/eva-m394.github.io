@@ -43,4 +43,10 @@ def morse_decodage(txt):  ##définition de la fontion
                 txt_final+=list(caracteres_morse.keys())[j] ##on extrait la clef correspondant à la valeur (j)
                 cara_morse="" ##on réinitialise la variable
     return txt_final
-    
+
+quoi=input("Que voulez-vous faire ? (encoder/décoder): ")
+txt=input("Entrez le texte: ")
+if quoi=="encoder":
+    print(morse_encodage(txt))
+elif quoi=="décoder":
+    print(morse_decodage(txt))
