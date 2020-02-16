@@ -7,12 +7,12 @@ def morse_encodage(txt): ##définition de la fonction
     txt=[*txt] ##création d'une liste qui sépare tous les caractères de txt
     txt_final=""
     x=0 ##compteur
-    for i in range(len(txt)): ##vérification des caractères
-        if txt[i] not in caracteres_morse.keys(): ##si les caractères sont traduisibles
+    for i in range(len(txt)): 
+        if txt[i] not in caracteres_morse.keys(): 
             return "Erreur. Le caractère ",txt[i]," ne peut pas être traduit en morse."
-        elif all(c in ".- " for c in txt): ##si le texte est déjà traduit (ne contient que "-","."," ")
+        elif all(c in ".- " for c in txt): 
             return "Erreur. Le texte que vous avez entré est déjà en morse."
-    for i in range(len(txt)): ##extrait le morse correspondant au caractère
+    for i in range(len(txt)):
         if txt[i]!=" ":
             txt_final+=caracteres_morse[txt[x]]+" " ##on ajoute " " à la fin pour séparer les caratères
         else :
@@ -87,7 +87,7 @@ def vigenere(quoi,txt,clef): ##définition de la fonction
     return (txt_final)
 
 
-def cesar(quoi,texte,decalage,direction): ##définition de la fontion
+def cesar(quoi,txt,decalage,direction): ##définition de la fontion
     ##définition des variables
     txt_final=""
     txt_ascii=[]
@@ -96,7 +96,7 @@ def cesar(quoi,texte,decalage,direction): ##définition de la fontion
         decalage*=-1
     if quoi=="décoder" :
         decalage*=-1
-    for i in texte: ##transformation du texte à crypter en un tableau des ascii correspondant à chaque caractère
+    for i in txt: ##transformation du texte à crypter en un tableau des ascii correspondant à chaque caractère
         txt_ascii.append(ord(i))
     for i in range(len(txt_ascii)): ##encodage de chaque caractère selon son type
         if 97<=txt_ascii[i]<=122: ##minuscules
@@ -123,56 +123,97 @@ def cesar(quoi,texte,decalage,direction): ##définition de la fontion
 
 
 
-############
-#####CODE###
-############
-##
-####création du dictionnaire pour le morse##
+##########
+###CODE###
+##########
+
+##création du dictionnaire pour le morse##
 caracteres_morse= { "A":".-", "B":"-...", "C":"-.-.", "D":"-..", "E":".", "F":"..-.", "G":"--.", "H":"....", "I":"..", "J":".---", "K":"-.-", "L":".-..", "M":"--", "N":"-.", "O":"---", "P":".--.", "Q":"--.-", "R":".-.", "S":"...", "T":"-", "U":"..-", "V":"...-", "W":".--", "X":"-..-", "Y":"-.--", "Z":"--..", "1":".----", "2":"..---", "3":"...--", "4":"....-", "5":".....", "6":"-....", "7":"--...", "8":"---..", "9":"----.", "0":"-----", ".":".-.-.-", "?":"..--..", "-":"-....-", "'":".----.", " ":" ", ",":"--..--"} 
-##
-##redo="oui" ##pour pouvoir rejouer le programme
-##
-##print("Bienvenue.")
-##print("Ici, vous pourrez encoder ou décoder en utilisant le chiffre de César, celui de Vignère ou encore le code Morse.")
-##
-##while redo=="oui":
-##    quel=input("Lequel voulez-vous utiliser ? (César/Vigenère/Morse): ")
-##    if quel!="César" and quel !="Vigenère" and quel!="Morse": ##vérification de l'entrée
-##        print("")
-##        print("Erreur. Vérifiez l'orthographe.")
-##        print("")
-##        continue ##retour au début
-##    quoi=input("Que voulez-vous faire ? (encoder/décoder): ")
-##    if quoi!="encoder" and quoi!="décoder": ##vérification de l'entrée
-##        print("")
-##        print("Erreur. Vérifiez l'orthographe.")
-##        print("")
-##        continue ##retour au début
-##    txt=input("Entrez le texte: ")
-##    if quel=="Morse":
-##        if quoi=="encoder":
-##            print("")
-##            print(morse_encodage(txt)) ##éxécution de la fonction
-##        elif quel=="décoder":
-##            print("")
-##            print(morse_decodage(txt)) ##éxécution de la fontion
-##    elif quel=="César":
-##        decalage=int(input("Entrez la valeur du décalage à l'encodage: "))
-##        direction=input("Entrez la direction (droite/gauche): ")
-##        if direction!="droite" and direction!="gauche": ##vérification de l'entrée
-##            print("")
-##            print("Erreur. Vérifiez l'orthographe.")
-##            print("")
-##            continue ##retour au début
-##        print("")
-##        print(cesar(quoi,txt,decalage,direction)) ##éxécution de la fonction
-##    elif quel=="Vigenère":
-##        clef=input("Entrez la clef de chiffrage (sous forme de texte): ")
-##        print("")
-##        print(vigenere(quoi,txt,clef)) ##éxécution de la fonction
-##    print("")
-##    redo=input("Voulez-vous recommencer ? (oui/non): ")
-##    if redo=="non":
-##        print("Au revoir.")
+
+redo="oui" ##pour pouvoir rejouer le programme
+
+print("Bienvenue.")
+print("Ici, vous pourrez encoder ou décoder en utilisant le chiffre de César, celui de Vignère ou encore le code Morse.")
+
+while redo=="oui":
+    quel=input("Lequel voulez-vous utiliser ? (César/Vigenère/Morse): ")
+    if quel!="César" and quel !="Vigenère" and quel!="Morse": ##vérification de l'entrée
+        print("")
+        print("Erreur. Vérifiez l'orthographe.")
+        print("")
+        continue ##retour au début
+    quoi=input("Que voulez-vous faire ? (encoder/décoder): ")
+    if quoi!="encoder" and quoi!="décoder": ##vérification de l'entrée
+        print("")
+        print("Erreur. Vérifiez l'orthographe.")
+        print("")
+        continue ##retour au début
+    txt=input("Entrez le texte: ")
+    if quel=="Morse":
+        if quoi=="encoder":
+            print("")
+            print(morse_encodage(txt)) ##éxécution de la fonction
+        elif quel=="décoder":
+            print("")
+            print(morse_decodage(txt)) ##éxécution de la fontion
+    elif quel=="César":
+        decalage=int(input("Entrez la valeur du décalage à l'encodage: "))
+        direction=input("Entrez la direction (droite/gauche): ")
+        if direction!="droite" and direction!="gauche": ##vérification de l'entrée
+            print("")
+            print("Erreur. Vérifiez l'orthographe.")
+            print("")
+            continue ##retour au début
+        print("")
+        print(cesar(quoi,txt,decalage,direction)) ##éxécution de la fonction
+    elif quel=="Vigenère":
+        clef=input("Entrez la clef de chiffrage (sous forme de texte): ")
+        print("")
+        print(vigenere(quoi,txt,clef)) ##éxécution de la fonction
+    print("")
+    redo=input("Voulez-vous recommencer ? (oui/non): ")
+    if redo=="non":
+        print("Au revoir.")
 
 
+###########
+###TESTS###
+###########
+
+#####Vigenère###
+##
+##if vigenere("encoder","Hello World !","clef")=="Jppqq Attwh !":
+##    print("Test encodage Vigenère OK")
+##else:
+##    print("Test encodage Vigenère pas OK")
+##
+##if vigenere("décoder","Jppqq Attwh !","clef")=="Hello World !":
+##    print("Test décodage Vigenère OK")
+##else:
+##    print("Test décodage Vigenère pas OK :", vigenere("décoder","Jppqq Attwh !","clef"))
+##
+##
+#####César###
+##if cesar("encoder","Hello World !",147,"droite")=="Yvccf Nficu !":
+##    print("Test encodage César OK")
+##else:
+##    print("Test encodage César pas OK", cesar("encoder","Hello World !",147,"droite"))
+##
+##if cesar("décoder","Yvccf Nficu !",147,"droite")=="Hello World !":
+##    print("Test décodage César OK")
+##else:
+##    print("Test décodage César pas OK :", cesar("décoder","Yvccf Nficu !",147,"droite"))
+##
+##    
+#####Morse###
+##caracteres_morse= { "A":".-", "B":"-...", "C":"-.-.", "D":"-..", "E":".", "F":"..-.", "G":"--.", "H":"....", "I":"..", "J":".---", "K":"-.-", "L":".-..", "M":"--", "N":"-.", "O":"---", "P":".--.", "Q":"--.-", "R":".-.", "S":"...", "T":"-", "U":"..-", "V":"...-", "W":".--", "X":"-..-", "Y":"-.--", "Z":"--..", "1":".----", "2":"..---", "3":"...--", "4":"....-", "5":".....", "6":"-....", "7":"--...", "8":"---..", "9":"----.", "0":"-----", ".":".-.-.-", "?":"..--..", "-":"-....-", "'":".----.", " ":" ", ",":"--..--"} 
+##if morse_encodage("Hello World")==".... . .-.. .-.. ---  .-- --- .-. .-.. -.. ":
+##    print("Test encodage Morse OK")
+##else:
+##    print("Test encodage Morse pas OK :", morse_encodage("Hello World"))
+##
+##if morse_decodage(".... . .-.. .-.. ---  .-- --- .-. .-.. -.. ")=="HELLO WORLD ":
+##    print("Test décodage Morse OK")
+##else:
+##    print("Test décodage Morse pas OK :", morse_decodage(".... . .-.. .-.. ---  .-- --- .-. .-.. -.. "))
+##
