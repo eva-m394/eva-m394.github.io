@@ -23,7 +23,7 @@ def chiffrage_vigenere(quoi,txt,clef): ##définition de la fonction
         t=-1
     clef=clef.lower()
     for i in clef: ##transformation de la clef en un tableau des caractères ascii correspondants
-        clef_ascii.append(ord(i)-97) ##-97 pour que a=0, b=1, etc
+        clef_ascii.append(t*(ord(i)-97)) ##-97 pour que a=0, b=1, etc
     while len(clef_ascii)<len(txt): ##assemblage de la clef pour avoir assez de caractères
         clef_ascii+=clef_ascii
     clef_ascii=clef_ascii[:len(txt)]
@@ -39,10 +39,10 @@ def chiffrage_vigenere(quoi,txt,clef): ##définition de la fonction
             maj_min_sym.append("")
     for i in txt_ascii: ##encodage de chaque caractère selon son type
         if maj_min_sym[j]=="m": ##minuscules
-            x=(i+t*clef_ascii[j])%26 ##(texte[i]+clef[i])%26 pour encoder, (texte[i]-clef[i])%26 pour décoder
+            x=(i+clef_ascii[j])%26 ##(texte[i]+clef[i])%26 pour encoder, (texte[i]-clef[i])%26 pour décoder
             txt_final+=chr(x+97)
         elif maj_min_sym[j]=="M": ##majuscules
-            x=(i+t*clef_ascii[j])%26
+            x=(i+clef_ascii[j])%26
             txt_final+=chr(x+65)
         else: ##symboles/chiffres
             txt_final+=chr(i)

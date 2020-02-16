@@ -9,7 +9,7 @@ def morse_encodage(txt): ##définition de la fonction
     x=0 ##compteur
     for i in range(len(txt)): ##vérification des caractères
         if txt[i] not in caracteres_morse.keys(): ##si les caractères sont traduisibles
-            return "Erreur. Le caractère '",txt[i],"' ne peut pas être traduit en morse."
+            return "Erreur. Le caractère ",txt[i]," ne peut pas être traduit en morse."
         elif all(c in ".- " for c in txt): ##si le texte est déjà traduit (ne contient que "-","."," ")
             return "Erreur. Le texte que vous avez entré est déjà en morse."
     for i in range(len(txt)): ##extrait le morse correspondant au caractère
@@ -29,7 +29,7 @@ def morse_decodage(txt):  ##définition de la fontion
     x=0 ##compteur
     for i in range(len(txt)): ##vérification des caractères
         if txt[i] not in caracteres_morse.values():
-            return("Erreur. Le caractère '",txt[i],"' n'existe pas en morse.")
+            return("Erreur. Le caractère ",txt[i]," n'existe pas en morse.")
     for i in range(len(txt)): ##on extrait le caractère correspondant au morse
         if txt[i]!=" ":
             cara_morse+=txt[i] 
@@ -60,7 +60,7 @@ def vigenere(quoi,txt,clef): ##définition de la fonction
         t=-1
     clef=clef.lower()
     for i in clef: ##transformation de la clef en un tableau des caractères ascii correspondants
-        clef_ascii.append(ord(i)-97) ##-97 pour que a=0, b=1, etc
+        clef_ascii.append(t*(ord(i)-97)) ##-97 pour que a=0, b=1, etc
     while len(clef_ascii)<len(txt): ##assemblage de la clef pour avoir assez de caractères
         clef_ascii+=clef_ascii
     clef_ascii=clef_ascii[:len(txt)]
@@ -76,10 +76,10 @@ def vigenere(quoi,txt,clef): ##définition de la fonction
             maj_min_sym.append("")
     for i in txt_ascii: ##encodage de chaque caractère selon son type
         if maj_min_sym[j]=="m": ##minuscules
-            x=(i+t*clef_ascii[j])%26 ##(texte[i]+clef[i])%26 pour encoder, (texte[i]-clef[i])%26 pour décoder
+            x=(i+clef_ascii[j])%26 ##(texte[i]+clef[i])%26 pour encoder, (texte[i]-clef[i])%26 pour décoder
             txt_final+=chr(x+97)
         elif maj_min_sym[j]=="M": ##majuscules
-            x=(i+t*clef_ascii[j])%26
+            x=(i+clef_ascii[j])%26
             txt_final+=chr(x+65)
         else: ##symboles/chiffres
             txt_final+=chr(i)
@@ -100,13 +100,13 @@ def cesar(quoi,texte,decalage,direction): ##définition de la fontion
         txt_ascii.append(ord(i))
     for i in range(len(txt_ascii)): ##encodage de chaque caractère selon son type
         if 97<=txt_ascii[i]<=122: ##minuscules
-            txt_ascii[i]=((txt_ascii[i]+decalage)-97)%26 ##-97 pour retrouver une lettre minuscule ##%26 pour retrouver une lettre de l'alphabet
+            txt_ascii[i]=(txt_ascii[i]+decalage-97)%26 ##-97 pour retrouver une lettre minuscule ##%26 pour retrouver une lettre de l'alphabet
             type_caractere.append("m") ##on enregistre que c'est une minuscule
         elif 65<=txt_ascii[i]<=90: ##majuscules
-            txt_ascii[i]=((txt_ascii[i]+decalage)-65)%26 ##-65 idem majuscule ##idem
+            txt_ascii[i]=(txt_ascii[i]+decalage-65)%26 ##-65 idem majuscule ##idem
             type_caractere.append("M") ##idem majuscule
         elif 48<=txt_ascii[i]<=57: ##chiffres
-            txt_ascii[i]=(txt_ascii[i]+decalage)%10 ##%10 pour retrouver un chiffre
+            txt_ascii[i]=(txt_ascii[i]+decalage-48)%10 ##-48 pour retrouver un chiffre ##idem chiffre
             type_caractere.append("c") ##idem chiffre
         else: ##symboles
             type_caractere.append("s") ##idem symbole
@@ -116,62 +116,63 @@ def cesar(quoi,texte,decalage,direction): ##définition de la fontion
         elif type_caractere[i]=="M": ##majuscules
             txt_final+=chr(txt_ascii[i]+65) ##+65 idem majuscule
         elif type_caractere[i]=="c":
-            txt_final+=chr(txt_ascii[i]+48)
-        elif type_caractere[i]=="s": ##chiffres ou symboles
+            txt_final+=chr(txt_ascii[i]+48) ##+48 idem chiffre
+        elif type_caractere[i]=="s": ##symboles
             txt_final+=chr(txt_ascii[i])
     return(txt_final)
 
 
 
-##########
-###CODE###
-##########
-
-##création du dictionnaire pour le morse##
+############
+#####CODE###
+############
+##
+####création du dictionnaire pour le morse##
 caracteres_morse= { "A":".-", "B":"-...", "C":"-.-.", "D":"-..", "E":".", "F":"..-.", "G":"--.", "H":"....", "I":"..", "J":".---", "K":"-.-", "L":".-..", "M":"--", "N":"-.", "O":"---", "P":".--.", "Q":"--.-", "R":".-.", "S":"...", "T":"-", "U":"..-", "V":"...-", "W":".--", "X":"-..-", "Y":"-.--", "Z":"--..", "1":".----", "2":"..---", "3":"...--", "4":"....-", "5":".....", "6":"-....", "7":"--...", "8":"---..", "9":"----.", "0":"-----", ".":".-.-.-", "?":"..--..", "-":"-....-", "'":".----.", " ":" ", ",":"--..--"} 
+##
+##redo="oui" ##pour pouvoir rejouer le programme
+##
+##print("Bienvenue.")
+##print("Ici, vous pourrez encoder ou décoder en utilisant le chiffre de César, celui de Vignère ou encore le code Morse.")
+##
+##while redo=="oui":
+##    quel=input("Lequel voulez-vous utiliser ? (César/Vigenère/Morse): ")
+##    if quel!="César" and quel !="Vigenère" and quel!="Morse": ##vérification de l'entrée
+##        print("")
+##        print("Erreur. Vérifiez l'orthographe.")
+##        print("")
+##        continue ##retour au début
+##    quoi=input("Que voulez-vous faire ? (encoder/décoder): ")
+##    if quoi!="encoder" and quoi!="décoder": ##vérification de l'entrée
+##        print("")
+##        print("Erreur. Vérifiez l'orthographe.")
+##        print("")
+##        continue ##retour au début
+##    txt=input("Entrez le texte: ")
+##    if quel=="Morse":
+##        if quoi=="encoder":
+##            print("")
+##            print(morse_encodage(txt)) ##éxécution de la fonction
+##        elif quel=="décoder":
+##            print("")
+##            print(morse_decodage(txt)) ##éxécution de la fontion
+##    elif quel=="César":
+##        decalage=int(input("Entrez la valeur du décalage à l'encodage: "))
+##        direction=input("Entrez la direction (droite/gauche): ")
+##        if direction!="droite" and direction!="gauche": ##vérification de l'entrée
+##            print("")
+##            print("Erreur. Vérifiez l'orthographe.")
+##            print("")
+##            continue ##retour au début
+##        print("")
+##        print(cesar(quoi,txt,decalage,direction)) ##éxécution de la fonction
+##    elif quel=="Vigenère":
+##        clef=input("Entrez la clef de chiffrage (sous forme de texte): ")
+##        print("")
+##        print(vigenere(quoi,txt,clef)) ##éxécution de la fonction
+##    print("")
+##    redo=input("Voulez-vous recommencer ? (oui/non): ")
+##    if redo=="non":
+##        print("Au revoir.")
 
-redo="oui" ##pour pouvoir rejouer le programme
-
-print("Bienvenue.")
-print("Ici, vous pourrez encoder ou décoder en utilisant le chiffre de César, celui de Vignère ou encore le code Morse.")
-
-while redo=="oui":
-    quel=input("Lequel voulez-vous utiliser ? (César/Vigenère/Morse): ")
-    if quel!="César" and quel !="Vigenère" and quel!="Morse": ##vérification de l'entrée
-        print("")
-        print("Erreur. Vérifiez l'orthographe.")
-        print("")
-        continue ##retour au début
-    quoi=input("Que voulez-vous faire ? (encoder/décoder): ")
-    if quoi!="encoder" and quoi!="décoder": ##vérification de l'entrée
-        print("")
-        print("Erreur. Vérifiez l'orthographe.")
-        print("")
-        continue ##retour au début
-    txt=input("Entrez le texte: ")
-    if quel=="Morse":
-        if quoi=="encoder":
-            print("")
-            print(morse_encodage(txt)) ##éxécution de la fonction
-        elif quel=="décoder":
-            print("")
-            print(morse_decodage(txt)) ##éxécution de la fontion
-    elif quel=="César":
-        decalage=int(input("Entrez la valeur du décalage à l'encodage: "))
-        direction=input("Entrez la direction (droite/gauche): ")
-        if direction!="droite" and direction!="gauche": ##vérification de l'entrée
-            print("")
-            print("Erreur. Vérifiez l'orthographe.")
-            print("")
-            continue ##retour au début
-        print("")
-        print(cesar(quoi,txt,decalage,direction)) ##éxécution de la fonction
-    elif quel=="Vigenère":
-        clef=input("Entrez la clef de chiffrage (sous forme de texte): ")
-        print("")
-        print(vigenere(quoi,txt,clef)) ##éxécution de la fonction
-    print("")
-    redo=input("Voulez-vous recommencer ? (oui/non): ")
-    if redo=="non":
-        print("Au revoir.")
 
